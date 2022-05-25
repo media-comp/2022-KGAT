@@ -39,7 +39,7 @@ The code has been tested running under Python 3.8.10. The required packages are 
 ## Run the Codes
 ### From source code
 ```
-python main_kgat.py --data_name last-fm
+python Main.py --data_name last-fm
 ```
 ### From dockerfile
 ```
