@@ -7,4 +7,4 @@ RUN apt-get -qq update \
     && pip3 install --quiet torch torchvision torchaudio tensorflow --extra-index-url https://download.pytorch.org/whl/cu113 \
     && pip3 install --quiet numpy pandas scipy tqdm scikit-learn \
     && pip3 install --quiet dgl-cu113 dglgo -f https://data.dgl.ai/wheels/repo.html
-RUN python Main.py --data_name small --n_epoch 1
+RUN python Main.py --data_name small --cf_batch_size 1 --kg_batch_size 1 --test_batch_size 1 --n_epoch 1 --K 1
