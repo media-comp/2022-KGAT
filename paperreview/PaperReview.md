@@ -47,7 +47,7 @@ style: |
 
 M1 Yang Boming
 
---- 
+---
 
 <!-- _footer: "https://velog.io/@jbeen2/CS224W-17.-Reasoning-over-Knowledge-Graphs" -->
 
@@ -71,7 +71,7 @@ Nodes, Edges, Node type, Relation type.
 ## Knowledge Graph Attention Network(KGAT)
 1. Provide better recommendation with item side information.
 2. KGAT model, which achieves high-order relation modeling in an explicit and end-top-end manner under GNN.
-3. Conduct extensive experiments to demonstrate the effectiveness pf KGAT and ites interpretability
+3. Conduct extensive experiments to demonstrate the effectiveness of KGAT and it's interpretability
 
 ---
 # Task Formulation
@@ -105,13 +105,13 @@ Nodes, Edges, Node type, Relation type.
 # Methodology
 ## CKG Embedding Layer
 
-We adopy TransR to parameterize entities and relations of CKG as vector represetations, considering direct connectivity of each triple $(h,r,t)$:
+We adopt TransR to parameterize entities and relations of CKG as vector represetations, considering direct connectivity of each triple $(h,r,t)$:
 
 $g(h,r,t) = \parallel W_re_h + e_r - W_re_t \parallel_2^2$
 
 $\mathcal{L}_{KG} = \sum_{(h,r,t,t')\in \mathcal{T}} - \ln \sigma(g(h,r,t') - g(h,r,t))$
 
---- 
+---
 
 # Methodology
 ## Attentive Embedding Propagation Layer  1/2
@@ -124,7 +124,7 @@ $\mathcal{L}_{KG} = \sum_{(h,r,t,t')\in \mathcal{T}} - \ln \sigma(g(h,r,t') - g(
 
 2. **Knowledge-aware Attention**: Implement $\pi(h,r,t)$ via relational attention mechanism, which is formulated as follows:
 
-    $\pi(h,r,t) = (W_r e_t) \top tanh((W_r e_h + e_r))$
+    $\pi(h,r,t) = (W_r e_t)^{\top} tanh((W_r e_h + e_r))$
 
 ---
 
