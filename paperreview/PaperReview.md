@@ -71,7 +71,7 @@ Nodes, Edges, Node type, Relation type.
 ## Knowledge Graph Attention Network(KGAT)
 1. Provide better recommendation with item side information.
 2. KGAT model, which achieves high-order relation modeling in an explicit and end-top-end manner under GNN.
-3. Conduct extensive experiments to demonstrate the effectiveness of KGAT and it's interpretability
+3. Conduct extensive experiments to demonstrate the effectiveness of KGAT and its interpretability
 
 ---
 # Task Formulation
@@ -103,11 +103,12 @@ Nodes, Edges, Node type, Relation type.
 ![bg w:500](Image/TransR.png)
 
 # Methodology
+
 ## CKG Embedding Layer
 
 We adopt TransR to parameterize entities and relations of CKG as vector represetations, considering direct connectivity of each triple $(h,r,t)$:
 
-$g(h,r,t) = \parallel W_re_h + e_r - W_re_t \parallel_2^2$
+$g(h,r,t) = \parallel W_re_h + e_r - W_re_t \parallel_2^2$. Here, $W_r$ is the transformation matrix of relation $r$. $e_h$, $e_r$ and $e_t$ are the embedding for $h$, $r$ and $t$ respectively.
 
 $\mathcal{L}_{KG} = \sum_{(h,r,t,t')\in \mathcal{T}} - \ln \sigma(g(h,r,t') - g(h,r,t))$
 
