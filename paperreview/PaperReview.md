@@ -158,7 +158,7 @@ $e^*_u = e^{(0)}_u \parallel \cdots \parallel e^{(L)}_u, e^*_i = e^{(0)}_i \para
 
 2. Finally, conduct inner product of user and item representations, so as to predict their matching score:
 
-    $\hat{y}(u,i) = e^*_u \top e^*_i$
+    $\hat{y}(u,i) = (e^*_u)^{\top} e^*_i$
     $\mathcal{L}_{CF} = \sum_{(u,i,j) \in \mathcal{O}} - \ln \sigma(\hat{y}(u,i) - \hat{y}(u,j))$
 
 ---
@@ -173,7 +173,8 @@ $\mathcal{L}_{KGAT} =  \mathcal{L}_{KG} + \mathcal{L}_{CF}$
 ---
 
 # Result
-## Overall Performance Comparsion
+## Overall Performance Comparison
+
 - KGAT consistently yields the best performance on all the datasets.
 ![center](Image/Overall.png)
 
