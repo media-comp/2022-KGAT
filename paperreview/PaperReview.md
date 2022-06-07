@@ -142,11 +142,11 @@ $\mathcal{L}_{KG}$ tries to maximize the discrimination between valid triplets a
 ## Attentive Embedding Propagation Layer  2/2
 3. **Information Aggregation**: The final phase is to aggregate the entity representation $e_h$ and its ego-network representations $e_{\mathcal{N_h}}$ as the new representation of entity $h$ :
 
-    $e_{h}^{(1)} = LeakyReLU(W_1(e_h + e_\mathcal{N_h})) + LeakyReLU(W_2(e_h \odot  e_\mathcal{N_h}))$
+    $e_{h}^{(1)} = LeakyReLU(W_1(e_h + e_\mathcal{N_h})) + LeakyReLU(W_2(e_h \odot  e_\mathcal{N_h}))$.
 
 4. **High-order Propagation**: Further stack more propagation layers to explore the high-order connectivity information, gathering the information propagated from the higher-hop neighbors:
 
-    $e_{\mathcal{N}_h}^{(l-1)} = \sum_{(h,r,t)\in\mathcal{N}_h} \pi(h,r,t)e_t^{(l-1)}$
+    $e_{\mathcal{N}_h}^{(l-1)} = \sum_{(h,r,t)\in\mathcal{N}_h} \pi(h,r,t)e_t^{(l-1)}$.
 
 
 ---
@@ -159,7 +159,7 @@ $e^*_u = e^{(0)}_u \parallel \cdots \parallel e^{(L)}_u, e^*_i = e^{(0)}_i \para
 2. Finally, conduct inner product of user and item representations, so as to predict their matching score:
 
     $\hat{y}(u,i) = (e^*_u)^{\top} e^*_i$
-    $\mathcal{L}_{CF} = \sum_{(u,i,j) \in \mathcal{O}} - \ln \sigma(\hat{y}(u,i) - \hat{y}(u,j))$
+    $\mathcal{L}_{CF} = \sum_{(u,i,j) \in \mathcal{O}} - \ln \sigma(\hat{y}(u,i) - \hat{y}(u,j))$.
 
 ---
 
