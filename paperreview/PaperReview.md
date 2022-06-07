@@ -54,7 +54,8 @@ M1 Yang Boming
 
 
 # Background
-## Knwoledge Graph
+## Knowledge Graph
+
 1. Heterogeneous graph: node or two or more types of edges.
 2. node becomes an **entity** and edge becomes a **relationship**.
 3. Traditional Graph $G=(V,E)$ Knowledge Graph 
@@ -108,9 +109,15 @@ Nodes, Edges, Node type, Relation type.
 
 We adopt TransR to parameterize entities and relations of CKG as vector represetations, considering direct connectivity of each triple $(h,r,t)$:
 
-$g(h,r,t) = \parallel W_re_h + e_r - W_re_t \parallel_2^2$. Here, $W_r$ is the transformation matrix of relation $r$. $e_h$, $e_r$ and $e_t$ are the embedding for $h$, $r$ and $t$ respectively.
+$g(h,r,t) = \parallel W_re_h + e_r - W_re_t \parallel_2^2$.
 
-$\mathcal{L}_{KG} = \sum_{(h,r,t,t')\in \mathcal{T}} - \ln \sigma(g(h,r,t') - g(h,r,t))$
+Here, $W_r$ is the transformation matrix of relation $r$. $e_h$, $e_r$ and $e_t$ are embeddings for $h$, $r$ and $t$ respectively.
+
+The loss function of TransR is:
+
+$\mathcal{L}_{KG} = \sum_{(h,r,t,t')\in \mathcal{T}} - \ln \sigma(g(h,r,t') - g(h,r,t))$.
+
+$\mathcal{L}_{KG}$ tries to maximize the discrimination between valid triplets and broken ones. $\sigma$ is sigmoid activation function. 
 
 ---
 
@@ -125,7 +132,9 @@ $\mathcal{L}_{KG} = \sum_{(h,r,t,t')\in \mathcal{T}} - \ln \sigma(g(h,r,t') - g(
 
 2. **Knowledge-aware Attention**: Implement $\pi(h,r,t)$ via relational attention mechanism, which is formulated as follows:
 
-    $\pi(h,r,t) = (W_r e_t)^{\top} tanh((W_r e_h + e_r))$
+    $\pi(h,r,t) = (W_r e_t)^{\top} tanh((W_r e_h + e_r))$.
+    
+    The value of $\pi(h,r,t)$ depends on the distance between $e_h$ and $e_t$ in relation $r$'s space.
 
 ---
 
@@ -156,7 +165,7 @@ $e^*_u = e^{(0)}_u \parallel \cdots \parallel e^{(L)}_u, e^*_i = e^{(0)}_i \para
 
 # Methodology
 ## Optimization
-Finally, the objective function to learn the loss function of KG and the loss function of CF joinlty, as follows:
+Finally, the objective function is the sum of the loss function $\mathcal{L}_{KG}$ and the loss function $\mathcal{L}_{CF}$, as follows:
 $\mathcal{L}_{KGAT} =  \mathcal{L}_{KG} + \mathcal{L}_{CF}$
 
 ![center w:800](Image/Overview2.png)
