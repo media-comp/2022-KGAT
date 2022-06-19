@@ -140,6 +140,9 @@ def train(args):
 
     metrics = pd.DataFrame([epoch_list, precision_list, recall_list, ndcg_list]).transpose()
     metrics.columns = ['epoch_idx', 'precision@{}'.format(args.K), 'recall@{}'.format(args.K), 'ndcg@{}'.format(args.K)]
+
+    if not os.path.exists(args.save_dir):
+        os.makedirs(args.save_dir, exist_ok=True)
     metrics.to_csv(args.save_dir + '/metrics.tsv', sep='\t', index=False)
 
 

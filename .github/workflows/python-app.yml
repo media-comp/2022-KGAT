@@ -26,4 +26,4 @@ jobs:
 
     - name: Run KGAT on small dataset
       run: |
-        python Main.py --data_name small --cf_batch_size 1 --kg_batch_size 1 --test_batch_size 1 --n_epoch 1 --K 1
+        python Main.py --data_name small --cf_batch_size 1 --kg_batch_size 1 --test_batch_size 1 --n_epoch 1 --K 1 --evaluate_every 9999
