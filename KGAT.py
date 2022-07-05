@@ -218,3 +218,54 @@ class KGAT(nn.Module):
             return self.calc_kg_loss(*input)
         if mode == 'predict':
             return self.cf_score(mode, *input)
+
+
+class KGAT_ablation(KGAT):
+    def __init__(self, args,
+                 n_users, n_entities, n_relations,
+                 user_pre_embed=None, item_pre_embed=None,
+                 ablation_kge=True, ablation_att=True):
+
+        super(KGAT_ablation, self).__init__(args, n_users, n_entities, n_relations, user_pre_embed, item_pre_embed)
+
+        assert ablation_kge or ablation_att
+
+        self.ablation_kge = ablation_kge
+        self.ablation_att = ablation_att
+
+    def calc_kg_loss(self, h, r, pos_t, neg_t):
+
+        r_embed = self.relation_embed(r)
+        W_r = self.W_R[r]
+
+        h_embed = self.entity_user_embed(h)
+        pos_t_embed = self.entity_user_embed(pos_t)
+        neg_t_embed = self.entity_user_embed(neg_t)
+
+        r_mul_h = torch.bmm(h_embed.unsqueeze(1), W_r).squeeze(1)
+        r_mul_pos_t = torch.bmm(pos_t_embed.unsqueeze(1), W_r).squeeze(1)
+        r_mul_neg_t = torch.bmm(neg_t_embed.unsqueeze(1), W_r).squeeze(1)
+
+        pos_score = torch.sum(torch.pow(r_mul_h + r_embed - r_mul_pos_t, 2), dim=1)
+        neg_score = torch.sum(torch.pow(r_mul_h + r_embed - r_mul_neg_t, 2), dim=1)
+
+        l2_loss = _L2_loss_mean(r_mul_h) + _L2_loss_mean(r_embed) + _L2_loss_mean(r_mul_pos_t) + _L2_loss_mean(r_mul_neg_t)
+
+        # apply ablation on TransR embedding component
+        if not self.ablation_kge:
+            kg_loss = (-1.0) * F.logsigmoid(neg_score - pos_score)
+            kg_loss = torch.mean(kg_loss)
+            loss = kg_loss + self.kg_l2loss_lambda * l2_loss
+        else:
+            loss = self.kg_l2loss_lambda * l2_loss
+
+        return loss
+
+    def att_score(self, edges):
+        r_mul_t = torch.matmul(self.entity_user_embed(edges.src['id']), self.W_r)
+        r_mul_h = torch.matmul(self.entity_user_embed(edges.dst['id']), self.W_r)
+        r_embed = self.relation_embed(edges.data['type'])
+        att = torch.bmm(r_mul_t.unsqueeze(1), torch.tanh(r_mul_h + r_embed).unsqueeze(2)).squeeze(-1)
+
+        # apply ablation on attention
+        return {'att': att} if not self.ablation_att else {'att': torch.zeros_like(att)}

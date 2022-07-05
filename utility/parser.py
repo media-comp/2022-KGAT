@@ -66,6 +66,11 @@ def parser():
     parser.add_argument('--K', type=int, default=20,
                         help='Calculate metric@K when evaluating.')
 
+    parser.add_argument('--ablation_kge', type=bool, default=False,
+                        help='Whether to do ablation study on TransR embedding component.')
+    parser.add_argument('--ablation_att', type=bool, default=False,
+                        help='Whether to do ablation study on attention.')
+
     args = parser.parse_args()
 
     save_dir = 'result/KGAT/{}/entitydim{}_relationdim{}_{}_{}_lr{}_pretrain{}/'.format(

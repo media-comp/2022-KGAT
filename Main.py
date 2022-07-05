@@ -40,7 +40,10 @@ def train(args):
 
 
     # model
-    model = KGAT(args, data.n_users, data.n_entities, data.n_relations, None, None)
+    if not args.ablation_kge and not args.ablation_att:
+        model = KGAT(args, data.n_users, data.n_entities, data.n_relations, None, None)
+    else:
+        model = KGAT_ablation(args, data.n_users, data.n_entities, data.n_relations, args.ablation_kge, args.ablation_att)
     model.to(device)
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
     
