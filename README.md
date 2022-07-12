@@ -25,8 +25,23 @@ If you want to use codes and datasets in your research, please cite:
 }
 ```
 
-## Environment Requirement
-The code has been tested running under Python 3.8.10. The required packages are as follows:
+## Prerequisites
+
+Create environment with python 3.8
+
+```shell script
+conda create -n kgat python=3.8.10
+```
+
+Install requirements:
+```shell script
+conda activate kgat
+conda install cudatoolkit=11.3
+pip install -r requirements.txt
+pip install dgl-cu113==0.8.1 dglgo -f https://data.dgl.ai/wheels/repo.html
+```
+
+List of required packages:
 * CUDA == 11.3
 * torch == 1.11.0
 * numpy == 1.22.4
@@ -55,15 +70,14 @@ We provide three processed datasets: Amazon-book, Last-FM, and Yelp2018.
 * You can find the full version of recommendation datasets via [Amazon-book](http://jmcauley.ucsd.edu/data/amazon), [Last-FM](http://www.cp.jku.at/datasets/LFM-1b/), and [Yelp2018](https://www.yelp.com/dataset/challenge).
 * We follow [KB4Rec](https://github.com/RUCDM/KB4Rec) to preprocess Amazon-book and Last-FM datasets, mapping items into Freebase entities via title matching if there is a mapping available.
 
-| | | Amazon-book | Last-FM | Yelp2018 |
-|:---:|:---|---:|---:|---:|
-|User-Item Interaction| #Users | 70,679 | 23,566 | 45,919|
-| | #Items | 24,915 | 48,123 | 45,538|
-| | #Interactions | 847,733 | 3,034,796 | 1,185,068|
-|Knowledge Graph | #Entities | 88,572 | 58,266 | 90,961|
-| | #Relations | 39 | 9 | 42 |
-| | #Triplets | 2,557,746 | 464,567 | 1,853,704|
-
+|                       |               | Amazon-book |   Last-FM |  Yelp2018 |
+| :-------------------: | :------------ | ----------: | --------: | --------: |
+| User-Item Interaction | #Users        |      70,679 |    23,566 |    45,919 |
+|                       | #Items        |      24,915 |    48,123 |    45,538 |
+|                       | #Interactions |     847,733 | 3,034,796 | 1,185,068 |
+|    Knowledge Graph    | #Entities     |      88,572 |    58,266 |    90,961 |
+|                       | #Relations    |          39 |         9 |        42 |
+|                       | #Triplets     |   2,557,746 |   464,567 | 1,853,704 |
 
 * `train.txt`
   * Train file.
